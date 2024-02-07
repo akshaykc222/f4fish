@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "103357185550",
+    "project_id": "naturebeatz-af459",
+    "storage_bucket": "naturebeatz-af459.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103357185550:android:bdeaba91f859dde3bec65f",
+        "android_client_info": {
+          "package_name": "com.example.grocery_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "103357185550-4n9sf5k00arbaijuj9s6b0mb466ffvnt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnhGR8eFD7WNSwQUxSQQwyOFPMgY_Fabc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "103357185550-4n9sf5k00arbaijuj9s6b0mb466ffvnt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
