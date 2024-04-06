@@ -32,14 +32,15 @@ class UserEntity {
 }
 
 class AddressEntity extends Equatable {
-  AddressEntity({
-    this.id,
-    this.addressDefault,
-    required this.phoneNumber,
-    required this.name,
-    required this.type,
-    required this.address,
-  });
+  AddressEntity(
+      {this.id,
+      this.addressDefault,
+      required this.phoneNumber,
+      required this.name,
+      required this.type,
+      required this.address,
+      this.lat,
+      this.long});
 
   int? id;
   bool? addressDefault = false;
@@ -47,15 +48,18 @@ class AddressEntity extends Equatable {
   String name;
   String type;
   String address;
+  double? lat;
+  double? long;
 
   factory AddressEntity.fromJson(Map<String, dynamic> json) => AddressEntity(
-        id: json["id"],
-        addressDefault: json["default"],
-        phoneNumber: json["phone_number"],
-        name: json["name"],
-        type: json["type"],
-        address: json["address"],
-      );
+      id: json["id"],
+      addressDefault: json["default"],
+      phoneNumber: json["phone_number"],
+      name: json["name"],
+      type: json["type"],
+      address: json["address"],
+      lat: json["latitude"],
+      long: json["longitude"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,
@@ -64,6 +68,8 @@ class AddressEntity extends Equatable {
         "name": name,
         "type": type,
         "address": address,
+        "latitude": lat,
+        "longitude": long
       };
 
   @override

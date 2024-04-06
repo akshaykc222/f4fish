@@ -82,8 +82,8 @@ class _DateTimeSlotState extends State<DateTimeSlot> {
 
     var data = await dio.get('api/v1/time_slots/?date=$date');
     setState(() {
-      timeSlots = List<TimeSlotModel>.from(
-          data["results"].map((x) => TimeSlotModel.fromJson(x)));
+      timeSlots = List<TimeSlotModel>.from(data["results"]
+          .map((x) => TimeSlotModel.fromJson(x, selected ?? DateTime.now())));
     });
   }
 

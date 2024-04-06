@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/data/remote/routes.dart';
@@ -49,15 +48,8 @@ class GroceryFeaturedCard extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              child: CachedNetworkImage(
-                imageUrl:
-                    "${AppRemoteRoutes.imagUrl}${groceryFeaturedItem.image}",
-                placeholder: (context, url) =>
-                    Image.asset("assets/icons/logo.png"),
-                errorWidget: (context, url, error) =>
-                    Image.asset("assets/icons/logo.png"),
-              ),
-            ),
+                child: Image.network(
+                    "${AppRemoteRoutes.imagUrl}${groceryFeaturedItem.image}")),
             SizedBox(
               height: 15,
             ),

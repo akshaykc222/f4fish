@@ -15,7 +15,7 @@ abstract class ProductRemoteDataUseCase {
   Future<CartEntity> getCart();
   Future<CartData> addCart(CartData data);
   Future<CartData> deleteCartProduct(int id);
-  Future<void> orderProducts(OrderCreateModel orderCreateModel);
+  Future<OrderData> orderProducts(OrderCreateModel orderCreateModel);
   Future<OrderModel> getOrders();
   Future<void> updateOrders(String orderId, Map<String, dynamic> data);
   Future<OrderModel> getStaffOrders(int region, {String? filter});
@@ -62,11 +62,19 @@ class ProductRemoteDataUseCaseImpl extends ProductRemoteDataUseCase {
   }
 
   @override
-  Future<void> orderProducts(OrderCreateModel orderCreateModel) async {
-    final data = await apiProvider.post(
-        AppRemoteRoutes.order_create, orderCreateModel.toJson());
-
-    debugPrint(data.toString());
+  Future<OrderData> orderProducts(OrderCreateModel orderCreateModel) async {
+    if (orderCreateModel.id != null) {
+      final data = await apiProvider.put(
+          "${AppRemoteRoutes.order_create}?id=${orderCreateModel.id}/",
+          orderCreateModel.toJson(updatePayment: true));
+      debugPrint(data.toString());
+      return OrderData.fromJson(data);
+    } else {
+      final data = await apiProvider.post(
+          AppRemoteRoutes.order_create, orderCreateModel.toJson());
+      debugPrint(data.toString());
+      return OrderData.fromJson(data);
+    }
   }
 
   @override

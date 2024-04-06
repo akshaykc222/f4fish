@@ -6,6 +6,7 @@ import 'package:grocery_app/core/response_classify.dart';
 import 'package:grocery_app/domain/entity/ProductEntity.dart';
 import 'package:grocery_app/presentation/controller/cart_controller.dart';
 import 'package:grocery_app/presentation/controller/product_controller.dart';
+import 'package:grocery_app/presentation/routes.dart';
 
 import '../../../styles/themes.dart';
 import '../../controller/home_controller.dart';
@@ -16,7 +17,6 @@ import '../../widgets/product_container.dart';
 import '../../widgets/shimmer_widget.dart';
 import '../driver/home.dart';
 import '../product_details/product_details_screen.dart';
-import 'checkout_bottom_sheet.dart';
 
 class CartScreen extends StatelessWidget {
   final controller = Get.find<CartController>();
@@ -299,16 +299,6 @@ class CartScreen extends StatelessWidget {
   }
 
   void showBottomSheet(context) {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        backgroundColor: Colors.transparent,
-        builder: (BuildContext bc) {
-          return Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: CheckoutBottomSheet(),
-          );
-        });
+    Get.toNamed(AppRoutes.checkOut);
   }
 }

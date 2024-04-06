@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:grocery_app/app_constants.dart';
 import 'package:grocery_app/domain/entity/ProductEntity.dart';
@@ -132,18 +132,11 @@ class GroceryItemCardWidget extends StatelessWidget {
 
   Widget imageWidget(String url) {
     return Container(
-      child: CachedNetworkImage(
-        imageUrl: url,
-        errorWidget: (a, b, c) => Image.asset("assets/icons/logo.png"),
-        placeholder: (
-          a,
-          b,
-        ) =>
-            Image.asset("assets/icons/logo.png"),
-        width: 150,
-        height: 150,
-      ),
-    );
+        child: Image.network(
+      url,
+      errorBuilder: (a, b, c) => Image.asset("assets/icons/logo.png"),
+      loadingBuilder: (a, b, c) => Image.asset("assets/icons/logo.png"),
+    ));
   }
 
   Widget addWidget() {

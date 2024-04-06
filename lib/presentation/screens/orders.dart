@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
@@ -131,7 +130,9 @@ class OrderTile extends StatelessWidget {
                   ),
                 ],
               )),
-              Divider(color: Colors.green.shade500,),
+              Divider(
+                color: Colors.green.shade500,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -222,12 +223,11 @@ class ProductOrderTile extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CachedNetworkImage(
-                  imageUrl: "${AppConstants.imagePath}${product.product.thumbnail ?? " "}",
-                  errorWidget: (e, t, y) =>
-                      Image.asset("assets/icons/logo.png"),
+                SizedBox(
                   width: 80,
                   height: 80,
+                  child: Image.network(
+                      "${AppConstants.imagePath}${product.product.thumbnail ?? " "}"),
                 ),
                 SizedBox(
                   width: 20,
@@ -240,7 +240,6 @@ class ProductOrderTile extends StatelessWidget {
                       text: product.product.name,
                       fontWeight: FontWeight.bold,
                     ),
-
                     SizedBox(
                       height: 10,
                     ),

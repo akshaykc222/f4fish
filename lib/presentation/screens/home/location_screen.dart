@@ -1,12 +1,11 @@
 import 'package:anim_search_bar/anim_search_bar.dart';
-import 'package:awesome_place_search/awesome_place_search.dart';
+// import 'package:awesome_place_search/awesome_place_search.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_app/app_constants.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
 import 'package:grocery_app/core/response_classify.dart';
 import 'package:grocery_app/presentation/controller/home_controller.dart';
-import 'package:grocery_app/presentation/routes.dart';
 import 'package:grocery_app/presentation/styles/colors.dart';
 import 'package:grocery_app/presentation/widgets/buttons.dart';
 import 'package:grocery_app/presentation/widgets/shimmer_widget.dart';
@@ -21,24 +20,9 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
-  PredictionModel? prediction;
   TextEditingController textEditor = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    _searchPlaces() {
-      return AwesomePlaceSearch(
-        context: context,
-        key: "Your Google map key", //Insert Your google Api Key
-        onTap: (value) async {
-          final result = await value;
-          setState(() {
-            prediction = result;
-          });
-        },
-      ).show();
-    }
-
-    ;
     final controller = Get.find<HomeController>();
     controller.getAllLocation();
     return Scaffold(
@@ -245,7 +229,7 @@ class _LocationScreenState extends State<LocationScreen> {
                                               onTap: () {
                                                 controller
                                                     .saveLocalLocation(item);
-                                               Get.back();
+                                                Get.back();
                                               },
                                               leading: Icon(
                                                 Icons.factory_sharp,

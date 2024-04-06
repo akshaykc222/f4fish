@@ -43,7 +43,7 @@ class ProductRepositoryImpl extends ProductRepository {
   }
 
   @override
-  Future<void> orderProducts(OrderCreateModel orderCreateModel) {
+  Future<OrderData> orderProducts(OrderCreateModel orderCreateModel) {
     return dataSource.orderProducts(orderCreateModel);
   }
 

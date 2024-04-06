@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
@@ -128,7 +128,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                                 tabs: [
                                   Tab(
                                       child: BigText(
-                                    text: "Custamize",
+                                    text: "Customize",
                                     color: Colors.black87,
                                     size: 20,
                                   )),
@@ -842,19 +842,14 @@ class ProductSubItems extends StatelessWidget {
                     ///image
                     Center(
                         child: Container(
-                      height: 80,
-                      width: 120,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: CachedNetworkImage(
-                        fit: BoxFit.fill,
-                        errorWidget: (ctx, error, child) =>
-                            Image.asset("assets/icons/logo.png"),
-                        imageUrl:
-                            "${AppRemoteRoutes.imagUrl}${item.variantImage}",
-                      ),
-                    )),
+                            height: 80,
+                            width: 120,
+                            decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5)),
+                            ),
+                            child: Image.network(
+                                "${AppRemoteRoutes.imagUrl}${item.variantImage}"))),
 
                     spacer20,
                     // Obx(() =>

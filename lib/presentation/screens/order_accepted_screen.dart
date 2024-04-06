@@ -14,7 +14,10 @@ class _OrderAcceptedScreenState extends State<OrderAcceptedScreen> {
   @override
   void initState() {
     final controller = Get.find<CartController>();
-    controller.getCart();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      controller.getCart();
+    });
+
     super.initState();
   }
 

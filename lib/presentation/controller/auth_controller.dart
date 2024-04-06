@@ -113,9 +113,9 @@ class AuthController extends GetxController {
     }
   }
 
-  final getUserDataResponse = ResponseClassify<UserEntity>.loading().obs;
+  final getUserDataResponse = ResponseClassify<UserEntity>.error("").obs;
 
-  getUserData() async {
+  Future getUserData() async {
     getUserDataResponse.value = ResponseClassify.loading();
     try {
       getUserDataResponse.value = ResponseClassify<UserEntity>.completed(
@@ -123,6 +123,7 @@ class AuthController extends GetxController {
       if (getUserDataResponse.value.data!.address.isNotEmpty) {
         changeSelectedAddress(getUserDataResponse.value.data!.address.first);
       }
+      refresh();
     } catch (e) {
       print(e);
       getUserDataResponse.value = ResponseClassify.error(e.toString());
@@ -131,7 +132,7 @@ class AuthController extends GetxController {
 
   final addingData = false.obs;
   final addressFormKey = GlobalKey<FormState>();
-
+  var addAddressResponse = ResponseClassify.error("").obs;
   addUserData(AddressEntity address) async {
     // if(addressList.contains(address)){
     //   addressList.remove(address);
@@ -143,12 +144,16 @@ class AuthController extends GetxController {
     addingData.value = true;
     debugPrint(getUserDataResponse.value.data.toString());
     getUserDataResponse.value.data!.address.add(address);
+    addAddressResponse.value = ResponseClassify.loading();
     try {
-      await addAddressUseCase
-          .call(getUserDataResponse.value.data!)
-          .then((value) => getUserData());
+      addAddressResponse.value = ResponseClassify.completed(
+          await addAddressUseCase.call(getUserDataResponse.value.data!));
+      shouldRefresh.value = true;
+      getUserData().then((value) => Get.offNamedUntil(
+          AppRoutes.address, ModalRoute.withName(AppRoutes.checkOut)));
     } catch (e) {
-      getUserData();
+      getUserData().then((value) => Get.back());
+      addAddressResponse.value = ResponseClassify.error(e.toString());
     }
     addingData.value = false;
   }
@@ -163,4 +168,6 @@ class AuthController extends GetxController {
     print("changing value");
     selectedAddress.value = entity;
   }
+
+  var shouldRefresh = false.obs;
 }

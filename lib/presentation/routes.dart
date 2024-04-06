@@ -8,6 +8,7 @@ import 'package:grocery_app/presentation/screens/account/address_screen.dart';
 import 'package:grocery_app/presentation/screens/auth/otp_page.dart';
 import 'package:grocery_app/presentation/screens/auth/register.dart';
 import 'package:grocery_app/presentation/screens/cart/cart_screen.dart';
+import 'package:grocery_app/presentation/screens/cart/checkout_bottom_sheet.dart';
 import 'package:grocery_app/presentation/screens/driver/home.dart';
 import 'package:grocery_app/presentation/screens/home/home_screen.dart';
 import 'package:grocery_app/presentation/screens/home/location_screen.dart';
@@ -68,6 +69,7 @@ class Routes {
       name: AppRoutes.timeSlots,
       page: () => DateTimeSlot(),
     ),
+    GetPage(name: AppRoutes.checkOut, page: () => CheckoutBottomSheet())
   ];
 }
 
@@ -75,6 +77,7 @@ class AppRoutes {
   static const splashScreen = "/splash";
   static const login = "/login";
   static const timeSlots = "/timeslots";
+  static const checkOut = "/checkOut";
   static const account = "/account";
   static const homescreen = "/homescreen";
   static const cart = "/cart";

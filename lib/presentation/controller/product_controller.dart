@@ -87,7 +87,7 @@ class ProductController extends GetxController {
   }
   // final productsUse
 
-  final orderCreateResponse = ResponseClassify<void>.error("").obs;
+  final orderCreateResponse = ResponseClassify<OrderData>.error("").obs;
   final orderUpdateResponse = ResponseClassify.error("").obs;
 
   updateOrders(String orderId, Map<String, dynamic> data) {

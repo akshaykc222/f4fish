@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
-
 import 'colors.dart';
 
 String gilroyFontFamily = "Gilroy";
 
 ThemeData themeData = ThemeData(
   fontFamily: gilroyFontFamily,
+  useMaterial3: false,
   visualDensity: VisualDensity.adaptivePlatformDensity,
-  colorScheme: ColorScheme.fromSwatch().copyWith(secondary: AppColors.primaryColor),
+  colorScheme:
+      ColorScheme.fromSwatch().copyWith(secondary: AppColors.primaryColor),
 );

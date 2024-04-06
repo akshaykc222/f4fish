@@ -18,6 +18,11 @@ import '../controller/home_controller.dart';
 import 'order_accepted_screen.dart';
 
 class OrderFailedDialogue extends StatelessWidget {
+  final String? message;
+  final Function tryAgain;
+
+  OrderFailedDialogue({this.message, required this.tryAgain});
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -72,7 +77,7 @@ class OrderFailedDialogue extends StatelessWidget {
               flex: 2,
             ),
             AppText(
-              text: "Something went temply wrong",
+              text: message ?? "Something went temply wrong",
               fontSize: 16,
               fontWeight: FontWeight.w600,
               color: Color(0xff7C7C7C),
@@ -83,13 +88,7 @@ class OrderFailedDialogue extends StatelessWidget {
             AppButton(
               label: "Please Try Again",
               fontWeight: FontWeight.w600,
-              onPressed: () {
-                Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return OrderAcceptedScreen();
-                  },
-                ));
-              },
+              onPressed: () => tryAgain(),
             ),
             Spacer(
               flex: 4,
@@ -114,15 +113,28 @@ class OrderFailedDialogue extends StatelessWidget {
   }
 }
 
-class OrderWarningDialogue extends StatelessWidget {
+class OrderWarningDialogue extends StatefulWidget {
+  @override
+  State<OrderWarningDialogue> createState() => _OrderWarningDialogueState();
+}
+
+class _OrderWarningDialogueState extends State<OrderWarningDialogue> {
+  final productController =
+      Get.put(ProductController(sl(), sl(), sl(), sl(), sl(), sl(), sl()));
+  final authController = Get.find<AuthController>();
+  final cartController = Get.find<CartController>();
+  final homeController = Get.find<HomeController>();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      homeController.getLocalLocation();
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final productController =
-        Get.put(ProductController(sl(), sl(), sl(), sl(), sl(), sl(), sl()));
-    final authController = Get.find<AuthController>();
-    final cartController = Get.find<CartController>();
-    final homeController = Get.find<HomeController>();
-    homeController.getLocalLocation();
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18.0)),
       insetPadding: EdgeInsets.symmetric(horizontal: 25),
@@ -217,7 +229,7 @@ class OrderWarningDialogue extends StatelessWidget {
                                               .cartList.value?.data.total ??
                                           0.0,
                                       id: null),
-                                  status: "PENDING",
+                                  status: "ORDERED",
                                   comments: cartController.noteController.text,
                                   region: homeController.location.value!.id,
                                   timeSlot: selectedDate.value?.id ?? 1));
@@ -244,12 +256,43 @@ class OrderWarningDialogue extends StatelessWidget {
                               null) {
                             await authController.getUserData();
                           }
+
+                          await productController.orderProducts(
+                              OrderCreateModel(
+                                  cart: cartController.cartList.value!.data.id!,
+                                  address:
+                                      authController.selectedAddress.value!.id!,
+                                  paymentRef: PaymentModel(
+                                      status: "PENDING",
+                                      transactionId: Uuid().v4(),
+                                      type: "ONLINE_TRANSACTION",
+                                      orderAmount: cartController
+                                              .cartList.value?.data.total ??
+                                          0.0,
+                                      id: null),
+                                  status: "PENDING",
+                                  comments: cartController.noteController.text,
+                                  region: homeController.location.value!.id,
+                                  timeSlot: selectedDate.value?.id ?? 1));
+
                           print("DOING ONLINE PAYMENT");
-                          doPayment(
-                              context: context,
-                              user: authController
-                                  .getUserDataResponse.value.data!,
-                              model: cartController.cartList.value!.data);
+                          if (productController
+                                  .orderCreateResponse.value.data?.id !=
+                              null) {
+                            var instance = PhonePyPayment(
+                                tranId: productController
+                                    .orderCreateResponse.value.data?.id,
+                                context: context,
+                                amount:
+                                    cartController.cartList.value?.data.total ??
+                                        0.0,
+                                model: cartController.cartList.value!.data,
+                                user: authController
+                                    .getUserDataResponse.value.data!,
+                                selectedAddress:
+                                    authController.selectedAddress.value!.id!);
+                            instance.doPayment();
+                          }
                         }
                       }
                     },

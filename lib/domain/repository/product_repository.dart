@@ -11,7 +11,7 @@ abstract class ProductRepository {
   Future<CartEntity> getCart();
   Future<CartData> addCart(CartData data);
   Future<CartData> deleteCartProduct(int id);
-  Future<void> orderProducts(OrderCreateModel orderCreateModel);
+  Future<OrderData> orderProducts(OrderCreateModel orderCreateModel);
   Future<OrderModel> getOrders();
   Future<void> updateOrders(String orderId, Map<String, dynamic> data);
   Future<OrderModel> getStaffOrders(int region, {String? filter});

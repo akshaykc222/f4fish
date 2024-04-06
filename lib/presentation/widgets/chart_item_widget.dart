@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:grocery_app/common_widgets/app_text.dart';
@@ -209,14 +208,13 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
             height: 90,
             width: 120,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: CachedNetworkImageProvider(
-                  "${AppRemoteRoutes.imagUrl}${widget.item.product.thumbnail}",
-                ),
-              ),
-            ));
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: NetworkImage(
+                    "${AppRemoteRoutes.imagUrl}${widget.item.product.thumbnail}",
+                  ),
+                )));
 
     /*Container(
       width: 150,
