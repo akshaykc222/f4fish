@@ -11,6 +11,8 @@ import '../model/order_model.dart';
 abstract class ProductRemoteDataUseCase {
   Future<List<ProductEntity>> getProducts(
       {String? search, int? category, required int page});
+  Future<List<ProductEntity>> getFavorites();
+  Future adFav({required int id});
   Future<ProductEntity> getProductDetail(int id);
   Future<CartEntity> getCart();
   Future<CartData> addCart(CartData data);
@@ -109,5 +111,17 @@ class ProductRemoteDataUseCaseImpl extends ProductRemoteDataUseCase {
   Future<void> updateOrders(String orderId, Map<String, dynamic> data) async {
     final d =
         await apiProvider.patch("${AppRemoteRoutes.orders}/$orderId/", data);
+  }
+
+  @override
+  Future<List<ProductEntity>> getFavorites() async {
+    final data = await apiProvider.get(AppRemoteRoutes.fav);
+    return List<ProductEntity>.from(
+        data['results'].map((x) => ProductModel.fromJson(x)));
+  }
+
+  @override
+  Future adFav({required int id}) async {
+    final data = await apiProvider.post(AppRemoteRoutes.fav, {"id": id});
   }
 }

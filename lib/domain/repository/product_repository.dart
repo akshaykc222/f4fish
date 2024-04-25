@@ -15,4 +15,6 @@ abstract class ProductRepository {
   Future<OrderModel> getOrders();
   Future<void> updateOrders(String orderId, Map<String, dynamic> data);
   Future<OrderModel> getStaffOrders(int region, {String? filter});
+  Future<List<ProductEntity>> getFavorites();
+  Future adFav({required int id});
 }

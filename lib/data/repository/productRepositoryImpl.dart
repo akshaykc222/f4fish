@@ -56,4 +56,14 @@ class ProductRepositoryImpl extends ProductRepository {
   Future<void> updateOrders(String orderId, Map<String, dynamic> data) {
     return dataSource.updateOrders(orderId, data);
   }
+
+  @override
+  Future adFav({required int id}) {
+    return dataSource.adFav(id: id);
+  }
+
+  @override
+  Future<List<ProductEntity>> getFavorites() {
+    return dataSource.getFavorites();
+  }
 }

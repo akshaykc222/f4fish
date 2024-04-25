@@ -28,15 +28,18 @@ class PhonePyPayment {
   final int selectedAddress;
   final String? comments;
   final String? tranId;
+  final Function successFun;
 
-  PhonePyPayment(
-      {required this.context,
-      this.amount,
-      required this.model,
-      required this.user,
-      required this.selectedAddress,
-      this.tranId,
-      this.comments}) {
+  PhonePyPayment({
+    required this.context,
+    this.amount,
+    required this.model,
+    required this.user,
+    required this.selectedAddress,
+    this.tranId,
+    this.comments,
+    required this.successFun,
+  }) {
     init().then((value) => getCheckSum());
   }
 
@@ -139,11 +142,7 @@ class PhonePyPayment {
         print("trans:${value!['status']}");
         print(value);
         if (value!['status'] == "SUCCESS") {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) {
-              return OrderAcceptedScreen();
-            },
-          ));
+          successFun();
         } else {
           showDialog(
               context: context,

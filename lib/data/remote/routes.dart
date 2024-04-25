@@ -14,5 +14,6 @@ class AppRemoteRoutes {
   static const user = "api/v1/users/";
   static const order_create = "api/v1/order_create/";
   static const orders = "api/v1/orders/";
+  static const fav = "api/v1/favourite/";
   static const locations = "api/v1/locations/";
 }

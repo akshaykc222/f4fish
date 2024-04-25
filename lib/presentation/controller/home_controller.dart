@@ -58,7 +58,7 @@ class HomeController extends GetxController {
       this.getLocation, this.saveLocation) {
     // getAllLocation();
     getHome();
-    getLocalLocation();
+    // getLocalLocation();
   }
   /*
   change pincode varible value search

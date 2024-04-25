@@ -257,24 +257,6 @@ class _OrderWarningDialogueState extends State<OrderWarningDialogue> {
                             await authController.getUserData();
                           }
 
-                          await productController.orderProducts(
-                              OrderCreateModel(
-                                  cart: cartController.cartList.value!.data.id!,
-                                  address:
-                                      authController.selectedAddress.value!.id!,
-                                  paymentRef: PaymentModel(
-                                      status: "PENDING",
-                                      transactionId: Uuid().v4(),
-                                      type: "ONLINE_TRANSACTION",
-                                      orderAmount: cartController
-                                              .cartList.value?.data.total ??
-                                          0.0,
-                                      id: null),
-                                  status: "PENDING",
-                                  comments: cartController.noteController.text,
-                                  region: homeController.location.value!.id,
-                                  timeSlot: selectedDate.value?.id ?? 1));
-
                           print("DOING ONLINE PAYMENT");
                           if (productController
                                   .orderCreateResponse.value.data?.id !=
@@ -290,7 +272,42 @@ class _OrderWarningDialogueState extends State<OrderWarningDialogue> {
                                 user: authController
                                     .getUserDataResponse.value.data!,
                                 selectedAddress:
-                                    authController.selectedAddress.value!.id!);
+                                    authController.selectedAddress.value!.id!,
+                                successFun: () async {
+                                  await productController.orderProducts(
+                                      OrderCreateModel(
+                                          cart: cartController
+                                              .cartList.value!.data.id!,
+                                          address:
+                                              authController
+                                                  .selectedAddress.value!.id!,
+                                          paymentRef:
+                                              PaymentModel(
+                                                  status: "PENDING",
+                                                  transactionId: Uuid().v4(),
+                                                  type: "ONLINE_TRANSACTION",
+                                                  orderAmount:
+                                                      cartController
+                                                              .cartList
+                                                              .value
+                                                              ?.data
+                                                              .total ??
+                                                          0.0,
+                                                  id: null),
+                                          status: "PENDING",
+                                          comments: cartController
+                                              .noteController.text,
+                                          region:
+                                              homeController.location.value!.id,
+                                          timeSlot:
+                                              selectedDate.value?.id ?? 1));
+                                  Navigator.of(context)
+                                      .pushReplacement(MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                      return OrderAcceptedScreen();
+                                    },
+                                  ));
+                                });
                             instance.doPayment();
                           }
                         }

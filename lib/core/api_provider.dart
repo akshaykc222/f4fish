@@ -1,10 +1,11 @@
 import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:grocery_app/data/remote/routes.dart';
-import 'custom_exception.dart';
 
+import 'custom_exception.dart';
 
 class ApiProvider {
   late Dio dio;
@@ -51,7 +52,7 @@ class ApiProvider {
       GetStorage sr = GetStorage();
       String? token = sr.read('token');
       print(token);
-      if (token == null || token == "null") {
+      if (token == null) {
         dio.options.headers.clear();
       } else {
         print("this is working with token $token");

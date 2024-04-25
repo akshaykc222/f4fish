@@ -18,10 +18,12 @@ import 'package:grocery_app/domain/repository/home_repoistory.dart';
 import 'package:grocery_app/domain/repository/product_repository.dart';
 import 'package:grocery_app/domain/usecase/add_address_use_case.dart';
 import 'package:grocery_app/domain/usecase/add_cart_use_case.dart';
+import 'package:grocery_app/domain/usecase/add_fav_use_case.dart';
 import 'package:grocery_app/domain/usecase/delete_cart_use_case.dart';
 import 'package:grocery_app/domain/usecase/get_all_locations.dart';
 import 'package:grocery_app/domain/usecase/get_cart_use_case.dart';
 import 'package:grocery_app/domain/usecase/get_expand_product_usecase.dart';
+import 'package:grocery_app/domain/usecase/get_fav_use_case.dart';
 import 'package:grocery_app/domain/usecase/get_product_usecase.dart';
 import 'package:grocery_app/domain/usecase/get_user_user_case.dart';
 import 'package:grocery_app/domain/usecase/home_use_case.dart';
@@ -30,12 +32,11 @@ import 'package:grocery_app/domain/usecase/logout_usecase.dart';
 import 'package:grocery_app/domain/usecase/offer_usecase.dart';
 import 'package:grocery_app/domain/usecase/order_create_usercase.dart';
 import 'package:grocery_app/domain/usecase/order_usercase.dart';
+
 import 'core/api_provider.dart';
 import 'domain/usecase/upate_order_usecase.dart';
 
-
 final sl = GetIt.instance;
-
 
 Future<void> init() async {
   //data source
@@ -67,7 +68,8 @@ Future<void> init() async {
   sl.registerLazySingleton<HomeUseCase>(() => HomeUseCase(sl()));
   sl.registerLazySingleton<GetProductUseCase>(() => GetProductUseCase(sl()));
   sl.registerLazySingleton<OrderStaffUseCase>(() => OrderStaffUseCase(sl()));
-  sl.registerLazySingleton<ProductExpandUseCase>(() => ProductExpandUseCase(sl()));
+  sl.registerLazySingleton<ProductExpandUseCase>(
+      () => ProductExpandUseCase(sl()));
   sl.registerLazySingleton<LogoutUseCase>(() => LogoutUseCase(sl()));
   sl.registerLazySingleton<AddCartUseCase>(() => AddCartUseCase(sl()));
   sl.registerLazySingleton<GetCartUseCase>(() => GetCartUseCase(sl()));
@@ -85,6 +87,8 @@ Future<void> init() async {
   sl.registerLazySingleton<GetUserUseCaseAddress>(
       () => GetUserUseCaseAddress(sl()));
   sl.registerLazySingleton<AddAddressUseCase>(() => AddAddressUseCase(sl()));
+  sl.registerLazySingleton<AddFavUseCase>(() => AddFavUseCase(sl()));
+  sl.registerLazySingleton<GetFavUseCase>(() => GetFavUseCase(sl()));
   //core
   sl.registerLazySingleton<ApiProvider>(() => ApiProvider());
 

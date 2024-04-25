@@ -5,7 +5,9 @@ import 'package:grocery_app/core/usecase.dart';
 import 'package:grocery_app/data/remote/model/order_create_model.dart';
 import 'package:grocery_app/data/remote/model/order_model.dart';
 import 'package:grocery_app/domain/entity/ProductEntity.dart';
+import 'package:grocery_app/domain/usecase/add_fav_use_case.dart';
 import 'package:grocery_app/domain/usecase/get_expand_product_usecase.dart';
+import 'package:grocery_app/domain/usecase/get_fav_use_case.dart';
 import 'package:grocery_app/domain/usecase/get_product_usecase.dart';
 import 'package:grocery_app/domain/usecase/upate_order_usecase.dart';
 import 'package:progress_state_button/progress_button.dart';
@@ -13,6 +15,7 @@ import 'package:progress_state_button/progress_button.dart';
 import '../../domain/usecase/location_use_case.dart';
 import '../../domain/usecase/order_create_usercase.dart';
 import '../../domain/usecase/order_usercase.dart';
+import '../../injecter.dart';
 
 class ProductController extends GetxController {
   final GetProductUseCase getProductUseCase;
@@ -55,6 +58,18 @@ class ProductController extends GetxController {
   final quantityCount = 1.obs;
 
   final totalAmount = 0.0.obs;
+
+  final getFavUseCase = sl<GetFavUseCase>();
+  final addFavUseCase = sl<AddFavUseCase>();
+
+  final favorites = <ProductEntity>[].obs;
+  Future<void> getFavorites() async {
+    favorites.value = await getFavUseCase.call(NoParams());
+  }
+
+  addFav(int id) {
+    addFavUseCase.call(id);
+  }
 
   void changeTotal() {
     totalAmount.value =
